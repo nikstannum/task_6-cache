@@ -1,4 +1,4 @@
-package ru.clevertec.controller.util;
+package ru.clevertec.controller.util.paging;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

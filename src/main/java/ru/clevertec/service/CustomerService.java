@@ -1,7 +1,7 @@
 package ru.clevertec.service;
 
 import java.util.List;
-import ru.clevertec.controller.util.PagingUtil.Paging;
+import ru.clevertec.controller.util.paging.PagingUtil.Paging;
 import ru.clevertec.service.dto.CustomerDto;
 
 public interface CustomerService {

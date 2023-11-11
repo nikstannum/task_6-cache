@@ -15,6 +15,7 @@ ext {
     junitVersion = '5.10.0'
     mockitoVersion = '5.6.0'
     mapstructVersion = '1.5.3.Final'
+    jacksonVersion = '2.15.2'
 }
 repositories {
     mavenCentral()
@@ -31,6 +32,8 @@ dependencies {
     testAnnotationProcessor("org.mapstruct:mapstruct-processor:${mapstructVersion}")
     testImplementation 'org.assertj:assertj-core:3.24.2'
     implementation 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
+    implementation ("com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}")
+    implementation ("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${jacksonVersion}")
 
     runtimeOnly 'org.postgresql:postgresql:42.6.0'
     implementation 'org.yaml:snakeyaml:2.1'

@@ -2,7 +2,7 @@ package ru.clevertec.service.impl;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import ru.clevertec.controller.util.PagingUtil.Paging;
+import ru.clevertec.controller.util.paging.PagingUtil.Paging;
 import ru.clevertec.data.CustomerRepository;
 import ru.clevertec.data.entity.Customer;
 import ru.clevertec.exception.NotFoundException;

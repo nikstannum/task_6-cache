@@ -34,7 +34,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
             SELECT id, first_name, last_name, birth_date, email
             FROM customers
             WHERE deleted = false
-            ORDER by u.id
+            ORDER by id
             LIMIT ?
             OFFSET ?
             """;
