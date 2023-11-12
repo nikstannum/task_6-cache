@@ -14,6 +14,10 @@ import ru.clevertec.controller.util.paging.PagingUtil;
 import ru.clevertec.controller.validator.Validator;
 import ru.clevertec.controller.validator.impl.CustomerValidator;
 import ru.clevertec.data.CustomerRepository;
+import ru.clevertec.data.cache.Cache;
+import ru.clevertec.data.cache.impl.LFUCacheImpl;
+import ru.clevertec.data.cache.impl.LRUCacheImpl;
+import ru.clevertec.data.cache.proxy.ProxyCustomerRepository;
 import ru.clevertec.data.connection.ConfigManager;
 import ru.clevertec.data.connection.DataSource;
 import ru.clevertec.data.impl.CustomerRepositoryImpl;
@@ -36,8 +40,21 @@ public class BeanFactory implements Closeable {
         ConfigManager configManager = new ConfigManager("/application.yml");
         DataSource dataSource = new DataSource(configManager);
         closeables.add(dataSource);
+        @SuppressWarnings("unchecked")
+        Map<String, Object> cacheProps = (Map<String, Object>) configManager.getProperty("cache");
+        String cacheType = (String) cacheProps.get("type");
+        int expirationTime = (int) cacheProps.get("expirationTime");
+        int cacheSize = (int) cacheProps.get("size");
         CustomerRepository customerRepository = new CustomerRepositoryImpl(dataSource);
-
+        if ("LRU".equalsIgnoreCase(cacheType)) {
+            Cache cache = new LRUCacheImpl(cacheSize, expirationTime);
+            customerRepository = new ProxyCustomerRepository(customerRepository, cache);
+            closeables.add(cache);
+        } else if ("LFU".equalsIgnoreCase(cacheType)) {
+            Cache cache = new LFUCacheImpl(cacheSize, expirationTime);
+            customerRepository = new ProxyCustomerRepository(customerRepository, cache);
+            closeables.add(cache);
+        }
         // service
         CustomerMapper customerMapper = CustomerMapper.INSTANCE;
         CustomerService customerService = new CustomerServiceImpl(customerRepository, customerMapper);

@@ -8,3 +8,8 @@ db:
 json-parser: jackson
 pagination:
   defaultSize: 10
+# properties to choose type of cache (LRU, LFU, NONE) and time lifetime of objects in cache (seconds)
+cache:
+  type: LRU
+  size: 10
+  expirationTime: 600
