@@ -17,19 +17,15 @@ import ru.clevertec.data.entity.Customer;
 @RequiredArgsConstructor
 public class CustomerRepositoryImpl implements CustomerRepository {
 
-    private final DataSource dataSource;
-
     private static final String COLUMN_ID = "id";
     private static final String COLUMN_FIRST_NAME = "first_name";
     private static final String COLUMN_LAST_NAME = "last_name";
     private static final String COLUMN_EMAIL = "email";
     private static final String COLUMN_BIRTH_DATE = "birth_date";
-
     private static final String CREATE = """
             INSERT INTO customers (first_name, last_name, birth_date, email)
             VALUES (?, ?, ?, ?)
             """;
-
     private static final String FIND_ALL = """
             SELECT id, first_name, last_name, birth_date, email
             FROM customers
@@ -38,25 +34,22 @@ public class CustomerRepositoryImpl implements CustomerRepository {
             LIMIT ?
             OFFSET ?
             """;
-
     private static final String FIND_BY_ID = """
             SELECT id, first_name, last_name, birth_date, email
             FROM customers
             WHERE id = ? AND deleted = false
             """;
-
     private static final String UPDATE = """
             UPDATE customers
             SET first_name = ?, last_name = ?, birth_date = ?, email = ?
             WHERE id = ?
             """;
-
     private static final String DELETE_BY_ID = """
             UPDATE customers
             SET deleted = true
             WHERE id = ?
             """;
-
+    private final DataSource dataSource;
 
     @Override
     public Customer create(Customer customer) {

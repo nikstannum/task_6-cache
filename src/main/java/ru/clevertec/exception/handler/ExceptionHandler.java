@@ -2,7 +2,6 @@ package ru.clevertec.exception.handler;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import ru.clevertec.controller.MessageAssistant;
 import ru.clevertec.exception.AppException;
 import ru.clevertec.exception.NotFoundException;
 import ru.clevertec.exception.ValidationException;
@@ -13,8 +12,6 @@ public class ExceptionHandler {
     private static final String MSG_APP_ERROR = "Application error";
     private static final String MSG_CLIENT_ERROR = "Client error";
     private static final String DEFAULT_MESSAGE = "Unknown error";
-
-    private final MessageAssistant messageAssistant;
 
     public void handle(Exception e) {
         if (e instanceof NotFoundException) {
@@ -30,6 +27,10 @@ public class ExceptionHandler {
             log.error(e);
             System.err.println(MSG_APP_ERROR + " " + DEFAULT_MESSAGE);
         }
-        messageAssistant.continueChat();
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException ex) {
+            throw new RuntimeException(ex);
+        }
     }
 }

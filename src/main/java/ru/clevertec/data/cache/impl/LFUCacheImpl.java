@@ -1,6 +1,5 @@
 package ru.clevertec.data.cache.impl;
 
-import java.io.IOException;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Timer;

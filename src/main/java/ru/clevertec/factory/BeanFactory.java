@@ -84,12 +84,14 @@ public class BeanFactory implements Closeable {
         } else {
             throw new RuntimeException("add custom json parser"); // FIXME добавить либу с кастомным парсером и через адаптер инжектнуть
         }
-        MessageAssistant messageAssistant = new MessageAssistant(customerController, parser);
+        // ExcHandler
+        ExceptionHandler handler = new ExceptionHandler();
+        beans.put(ExceptionHandler.class, handler);
+
+        // MessageAssistant
+        MessageAssistant messageAssistant = new MessageAssistant(customerController, parser, handler);
         closeables.add(messageAssistant);
         beans.put(MessageAssistant.class, messageAssistant);
-
-        // ExcHandler
-        beans.put(ExceptionHandler.class, new ExceptionHandler(messageAssistant));
     }
 
     @SuppressWarnings("unchecked")
