@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import lombok.extern.log4j.Log4j2;
 import ru.clevertec.controller.CustomerController;
 import ru.clevertec.controller.MessageAssistant;
 import ru.clevertec.controller.util.json_parser.JacksonAdapter;
@@ -21,11 +22,13 @@ import ru.clevertec.data.cache.proxy.ProxyCustomerRepository;
 import ru.clevertec.data.connection.ConfigManager;
 import ru.clevertec.data.connection.DataSource;
 import ru.clevertec.data.impl.CustomerRepositoryImpl;
+import ru.clevertec.exception.handler.ExceptionHandler;
 import ru.clevertec.service.CustomerService;
 import ru.clevertec.service.dto.CustomerDto;
 import ru.clevertec.service.impl.CustomerServiceImpl;
 import ru.clevertec.service.mapper.CustomerMapper;
 
+@Log4j2
 public class BeanFactory implements Closeable {
 
     public final static BeanFactory INSTANCE = new BeanFactory();
@@ -35,7 +38,15 @@ public class BeanFactory implements Closeable {
     private BeanFactory() {
         this.beans = new HashMap<>();
         this.closeables = new ArrayList<>();
+        try {
+            init();
+            log.info("factory initialized");
+        } catch (Exception e) {
+            log.error(e);
+        }
+    }
 
+    private void init() {
         // data
         ConfigManager configManager = new ConfigManager("/application.yml");
         DataSource dataSource = new DataSource(configManager);
@@ -73,12 +84,12 @@ public class BeanFactory implements Closeable {
         } else {
             throw new RuntimeException("add custom json parser"); // FIXME добавить либу с кастомным парсером и через адаптер инжектнуть
         }
-
-
         MessageAssistant messageAssistant = new MessageAssistant(customerController, parser);
         closeables.add(messageAssistant);
         beans.put(MessageAssistant.class, messageAssistant);
 
+        // ExcHandler
+        beans.put(ExceptionHandler.class, new ExceptionHandler(messageAssistant));
     }
 
     @SuppressWarnings("unchecked")
@@ -92,8 +103,9 @@ public class BeanFactory implements Closeable {
             try {
                 closeable.close();
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                log.error(e);
             }
         }
+        log.info("factory closed");
     }
 }

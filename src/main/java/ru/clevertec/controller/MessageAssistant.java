@@ -131,7 +131,7 @@ public class MessageAssistant implements Closeable {
         continueChat();
     }
 
-    private void continueChat() {
+    public void continueChat() {
         System.out.println(MESSAGE_FOR_CONTINUE_CHAT);
         String input = scanner.next();
         switch (input) {
