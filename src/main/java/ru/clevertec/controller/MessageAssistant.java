@@ -26,7 +26,7 @@ public class MessageAssistant implements Closeable {
     private static final String MESSAGE_FOR_CREATE = """
             Please, input JSON string of the customer.
             For example:
-            {"firstName":"Ivan","lastName":"Ivanov","dateBirth":"01.11.2011","email":"ivanov@gmail.com"}
+            {"firstName":"Ivan","lastName":"Ivanov","dateBirth":"2011-11-25","email":"ivanov@gmail.com"}
             """;
     private final static String MESSAGE_FOR_CONTINUE_CHAT = """
             Let's try again.
@@ -43,7 +43,7 @@ public class MessageAssistant implements Closeable {
             """;
     private static final String MESSAGE_TO_INPUT_CUSTOMER_FOR_UPDATE = """
             Please, input JSON string of the customer you want to update. For example:
-            {"id":1,"firstName":"Ivan","lastName":"Ivanov","dateBirth":"01.11.2011","email":"ivanov@gmail.com"}
+            {"id":1,"firstName":"Ivan","lastName":"Ivanov","dateBirth":"2011-11-25","email":"ivanov@gmail.com"}
             It will mean that you want to update the customer with id = 1 and set the appropriate properties.
             """;
     private static final String MESSAGE_TO_INPUT_CUSTOMER_ID_FOR_DELETE = """

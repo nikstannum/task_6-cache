@@ -5,7 +5,7 @@ db:
   driver: org.postgresql.Driver
   pool-size: 20
 # choose json parser. Values: jackson, custom
-json-parser: jackson
+json-parser: custom
 pagination:
   defaultSize: 10
 # properties to choose type of cache (LRU, LFU, NONE) and time lifetime of objects in cache (seconds)

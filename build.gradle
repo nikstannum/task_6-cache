@@ -20,6 +20,7 @@ ext {
 }
 repositories {
     mavenCentral()
+    mavenLocal()
 }
 
 dependencies {
@@ -40,6 +41,8 @@ dependencies {
 
     runtimeOnly 'org.postgresql:postgresql:42.6.0'
     implementation 'org.yaml:snakeyaml:2.1'
+
+    implementation 'ru.clevertec:my-parser:1.0-SNAPSHOT'
 }
 
 test {

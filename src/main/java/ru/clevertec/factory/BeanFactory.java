@@ -9,6 +9,7 @@ import java.util.Map;
 import lombok.extern.log4j.Log4j2;
 import ru.clevertec.controller.CustomerController;
 import ru.clevertec.controller.MessageAssistant;
+import ru.clevertec.controller.util.json_parser.CustomParserAdapter;
 import ru.clevertec.controller.util.json_parser.JacksonAdapter;
 import ru.clevertec.controller.util.json_parser.JsonParser;
 import ru.clevertec.controller.util.paging.PagingUtil;
@@ -82,7 +83,7 @@ public class BeanFactory implements Closeable {
         if (parserType.equalsIgnoreCase("jackson")) {
             parser = new JacksonAdapter();
         } else {
-            throw new RuntimeException("add custom json parser"); // FIXME добавить либу с кастомным парсером и через адаптер инжектнуть
+            parser = new CustomParserAdapter();
         }
         // ExcHandler
         ExceptionHandler handler = new ExceptionHandler();
