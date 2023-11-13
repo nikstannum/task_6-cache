@@ -9,7 +9,7 @@ public class CustomerDto {
     private Long id;
     private String firstName;
     private String lastName;
-    @JsonFormat(pattern = "dd.MM.yyyy")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate dateBirth;
     private String email;
 }

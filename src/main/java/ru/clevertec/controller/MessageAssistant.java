@@ -3,8 +3,10 @@ package ru.clevertec.controller;
 import java.io.Closeable;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import ru.clevertec.controller.util.json_parser.JsonParser;
+import ru.clevertec.controller.util.xml_parser.XmlParser;
 import ru.clevertec.exception.handler.ExceptionHandler;
 import ru.clevertec.service.dto.CustomerDto;
 
@@ -22,7 +24,7 @@ public class MessageAssistant implements Closeable {
             Hello!
             My functional includes next opportunities with customers:
             you can create, get all, get by id, update, delete by id.
-            """ + FUNCTIONAL_MESSAGE;
+            """;
     private static final String MESSAGE_FOR_CREATE = """
             Please, input JSON string of the customer.
             For example:
@@ -55,11 +57,20 @@ public class MessageAssistant implements Closeable {
     private final CustomerController customerController;
     private final JsonParser jsonParser;
     private final ExceptionHandler handler;
+    private final XmlParser xmlParser;
 
     public void start() {
         System.out.println(START_MESSAGE);
+        int iteration = 1;
         while (true) {
-            System.out.println(MESSAGE_FOR_CONTINUE_CHAT);
+            String message;
+            if (iteration == 1) {
+                message = FUNCTIONAL_MESSAGE;
+            } else {
+                message = MESSAGE_FOR_CONTINUE_CHAT;
+            }
+            iteration++;
+            System.out.println(message);
             String input = scanner.next();
             try {
                 switch (input) {
@@ -92,7 +103,8 @@ public class MessageAssistant implements Closeable {
         String json = scanner.next();
         CustomerDto customerDto = jsonParser.read(json, CustomerDto.class);
         CustomerDto updated = customerController.update(customerDto);
-        System.out.println("Here is updated customer\n" + updated);
+        String xml = xmlParser.getXmlString(customerDto);
+        System.out.println("Here is updated customer\n" + updated + "\nIn xml format:\n" + xml);
     }
 
     private void processGetById() {
@@ -100,8 +112,9 @@ public class MessageAssistant implements Closeable {
         String idStr = scanner.next();
         Long id = Long.parseLong(idStr);
         CustomerDto customerDto = customerController.findById(id);
+        String xml = xmlParser.getXmlString(customerDto);
         System.out.println("Here customer with id = " + id);
-        System.out.println(customerDto);
+        System.out.println(customerDto + "\nIn xml format:\n" + xml);
     }
 
     private void processGetAll() {
@@ -111,8 +124,12 @@ public class MessageAssistant implements Closeable {
         int page = Integer.parseInt(pageSizeArray[0]);
         int size = Integer.parseInt(pageSizeArray[1]);
         List<CustomerDto> list = customerController.findAll(page, size);
+        String xml = list.stream()
+                .map(xmlParser::getXmlString)
+                .collect(Collectors.joining("\n"));
         System.out.println("Here customers you wanted:\n");
         list.forEach(System.out::println);
+        System.out.println("In xml format:\n" + xml);
     }
 
     private void processCreate() {
@@ -120,7 +137,8 @@ public class MessageAssistant implements Closeable {
         String json = scanner.next();
         CustomerDto customerDto = jsonParser.read(json, CustomerDto.class);
         CustomerDto created = customerController.create(customerDto);
-        System.out.println("You created new customer successfully.\nHere it is:\n" + created);
+        String xml = xmlParser.getXmlString(created);
+        System.out.println("You created new customer successfully.\nHere it is:\n" + created + "\nIn xml format:\n" + xml);
     }
 
     @Override

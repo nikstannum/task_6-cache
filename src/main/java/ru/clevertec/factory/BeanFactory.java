@@ -13,6 +13,8 @@ import ru.clevertec.controller.util.json_parser.CustomParserAdapter;
 import ru.clevertec.controller.util.json_parser.JacksonAdapter;
 import ru.clevertec.controller.util.json_parser.JsonParser;
 import ru.clevertec.controller.util.paging.PagingUtil;
+import ru.clevertec.controller.util.xml_parser.XmlParser;
+import ru.clevertec.controller.util.xml_parser.impl.JacksonXmlParser;
 import ru.clevertec.controller.validator.Validator;
 import ru.clevertec.controller.validator.impl.CustomerValidator;
 import ru.clevertec.data.CustomerRepository;
@@ -89,8 +91,9 @@ public class BeanFactory implements Closeable {
         ExceptionHandler handler = new ExceptionHandler();
         beans.put(ExceptionHandler.class, handler);
 
+        XmlParser xmlParser = new JacksonXmlParser();
         // MessageAssistant
-        MessageAssistant messageAssistant = new MessageAssistant(customerController, parser, handler);
+        MessageAssistant messageAssistant = new MessageAssistant(customerController, parser, handler, xmlParser);
         closeables.add(messageAssistant);
         beans.put(MessageAssistant.class, messageAssistant);
     }
