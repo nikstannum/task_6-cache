@@ -160,6 +160,10 @@ public class LFUCacheImpl implements Cache {
 
     @Override
     public void close() {
-        timers.forEach((key, value) -> deleteTimer(key));
+        timers.forEach((key, value) -> {
+            deleteTimer(key);
+            CacheElm cacheElm = (CacheElm) map.remove(key);
+            sortedMap.remove(cacheElm);
+        });
     }
 }

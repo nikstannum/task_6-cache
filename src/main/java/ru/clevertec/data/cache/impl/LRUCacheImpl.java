@@ -93,8 +93,10 @@ public class LRUCacheImpl implements Cache {
         String compositeId = key + ":" + cacheName;
         lock.lock();
         Object value = map.get(compositeId);
-        moveToFirst(compositeId, value);
-        lock.unlock();
+        if (value != null) {
+            moveToFirst(compositeId, value);
+            lock.unlock();
+        }
         return value;
     }
 
@@ -129,6 +131,10 @@ public class LRUCacheImpl implements Cache {
 
     @Override
     public void close() {
-        timers.forEach((key, value) -> deleteTimer(key));
+        timers.forEach((key, value) -> {
+            deleteTimer(key);
+            map.remove(key);
+            keyList.remove(key);
+        });
     }
 }
