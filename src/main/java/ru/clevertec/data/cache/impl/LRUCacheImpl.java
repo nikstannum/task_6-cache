@@ -12,6 +12,7 @@ import ru.clevertec.data.cache.Cache;
 
 /**
  * Implementation of the LRU Cache.
+ * To ensure thread safety when used in a multi-threaded environment, thread-safe collections and locks are used.
  */
 public class LRUCacheImpl implements Cache {
 
@@ -30,6 +31,12 @@ public class LRUCacheImpl implements Cache {
         this.keyList = new ConcurrentLinkedDeque<>();
     }
 
+    /**
+     * Checks the presence of an object in the cache by key
+     * @param key
+     * @param cacheName
+     * @return true if existing
+     */
     @Override
     public boolean isContains(String key, String cacheName) {
         String compositeId = key + ":" + cacheName;

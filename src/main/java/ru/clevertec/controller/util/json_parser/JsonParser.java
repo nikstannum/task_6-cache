@@ -1,5 +1,8 @@
 package ru.clevertec.controller.util.json_parser;
 
+/**
+ * Common interface for JSON parsing
+ */
 public interface JsonParser {
     String write(Object o);
 

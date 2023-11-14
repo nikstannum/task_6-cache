@@ -7,6 +7,9 @@ import ru.clevertec.data.CustomerRepository;
 import ru.clevertec.data.cache.Cache;
 import ru.clevertec.data.entity.Customer;
 
+/**
+ * Proxy repository connecting the real repository and the cache
+ */
 @RequiredArgsConstructor
 public class ProxyCustomerRepository implements CustomerRepository {
     private final CustomerRepository customerRepository;

@@ -9,15 +9,18 @@ import java.util.Map.Entry;
 import ru.clevertec.controller.validator.Validator;
 import ru.clevertec.service.dto.CustomerDto;
 
+/**
+ * Implementation of the {@link ru.clevertec.controller.validator.Validator} for {@link ru.clevertec.service.dto.CustomerDto}
+ */
 public class CustomerValidator implements Validator<CustomerDto> {
 
     private static final String FIRST_NAME = "first name";
     private static final String LAST_NAME = "last name";
     private static final String EMAIL = "email";
     private static final String BIRTH_DATE = "date of birth";
-    private static final String FIRST_LAST_NAME_CONSTRAINT = "should be less than 50 chars and contain only letters";
-    private static final String EMAIL_CONSTRAINT = "should be email and contain less than 50 symbols";
-    private static final String BIRTH_DATE_CONSTRAINT = "at least you have to birth";
+    private static final String FIRST_LAST_NAME_ERROR_MESSAGE = "should be less than 50 chars and contain only letters";
+    private static final String EMAIL_ERROR_MESSAGE = "should be email and contain less than 50 symbols";
+    private static final String BIRTH_DATE_ERROR_MESSAGE = "at least you have to birth";
 
     @Override
     public Map<Result, List<String>> validate(CustomerDto customerDto) {
@@ -65,9 +68,9 @@ public class CustomerValidator implements Validator<CustomerDto> {
     private String resolveMessage(String field) {
         String message = "";
         switch (field) {
-            case FIRST_NAME, LAST_NAME -> message = FIRST_LAST_NAME_CONSTRAINT;
-            case EMAIL -> message = EMAIL_CONSTRAINT;
-            case BIRTH_DATE -> message = BIRTH_DATE_CONSTRAINT;
+            case FIRST_NAME, LAST_NAME -> message = FIRST_LAST_NAME_ERROR_MESSAGE;
+            case EMAIL -> message = EMAIL_ERROR_MESSAGE;
+            case BIRTH_DATE -> message = BIRTH_DATE_ERROR_MESSAGE;
         }
         return message;
     }

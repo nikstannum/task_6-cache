@@ -1,10 +1,14 @@
 package ru.clevertec.controller.util.json_parser;
 
+
 import ru.clevertec.deserializer.Deserializer;
 import ru.clevertec.deserializer.impl.DeserializerImpl;
 import ru.clevertec.serializer.Serializer;
 import ru.clevertec.serializer.impl.SerializerImpl;
 
+/**
+ * Adapter to library with custom JSON parser
+ */
 public class CustomParserAdapter implements JsonParser {
     private final Deserializer deserializer;
     private final Serializer serializer;

@@ -4,6 +4,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
+/**
+ * Adapter to Jackson JSON parser
+ */
 public class JacksonAdapter implements JsonParser {
     private final ObjectMapper objectMapper;
 

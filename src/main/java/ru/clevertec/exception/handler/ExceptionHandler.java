@@ -6,6 +6,9 @@ import ru.clevertec.exception.AppException;
 import ru.clevertec.exception.NotFoundException;
 import ru.clevertec.exception.ValidationException;
 
+/**
+ * Exception handler that occurs in the application
+ */
 @Log4j2
 @RequiredArgsConstructor
 public class ExceptionHandler {

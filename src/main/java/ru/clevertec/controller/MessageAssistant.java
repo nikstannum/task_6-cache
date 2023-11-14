@@ -10,6 +10,10 @@ import ru.clevertec.controller.util.xml_parser.XmlParser;
 import ru.clevertec.exception.handler.ExceptionHandler;
 import ru.clevertec.service.dto.CustomerDto;
 
+/**
+ * An assistant that plays a role similar to a message converter on the web.
+ * As an additional functionality, the ability to maintain an interactive dialogue with the user is implemented.
+ */
 @RequiredArgsConstructor
 public class MessageAssistant implements Closeable {
     private final static String FUNCTIONAL_MESSAGE = """
@@ -61,15 +65,15 @@ public class MessageAssistant implements Closeable {
 
     public void start() {
         System.out.println(START_MESSAGE);
-        int iteration = 1;
+        boolean isFirstIteration = true;
         while (true) {
             String message;
-            if (iteration == 1) {
+            if (isFirstIteration) {
                 message = FUNCTIONAL_MESSAGE;
             } else {
                 message = MESSAGE_FOR_CONTINUE_CHAT;
             }
-            iteration++;
+            isFirstIteration = false;
             System.out.println(message);
             String input = scanner.next();
             try {

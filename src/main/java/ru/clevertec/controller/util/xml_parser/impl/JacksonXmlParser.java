@@ -6,6 +6,9 @@ import com.fasterxml.jackson.dataformat.xml.ser.ToXmlGenerator.Feature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import ru.clevertec.controller.util.xml_parser.XmlParser;
 
+/**
+ * Implementation XML parser using Jackson library
+ */
 public class JacksonXmlParser implements XmlParser {
 
     @Override

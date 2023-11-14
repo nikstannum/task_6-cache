@@ -12,7 +12,8 @@ import java.util.concurrent.locks.ReentrantLock;
 import ru.clevertec.data.cache.Cache;
 
 /**
- * Implementation of the LFU Cache. When performing operations with the cache, the time spent by objects in the cache is checked. If the time spent by objects exceeds the set value, then these objects are removed from the cache.
+ * Implementation of the LFU Cache.
+ * To ensure thread safety when used in a multi-threaded environment, thread-safe collections and locks are used.
  */
 public class LFUCacheImpl implements Cache {
 
@@ -38,6 +39,12 @@ public class LFUCacheImpl implements Cache {
         });
     }
 
+    /**
+     * Checks the presence of an object in the cache by key
+     * @param key
+     * @param cacheName
+     * @return true if existing
+     */
     @Override
     public boolean isContains(String key, String cacheName) {
         String compositeId = key + ":" + cacheName;
