@@ -1,0 +1,19 @@
+db:
+  url: jdbc:postgresql://127.0.0.1:5432/customers
+  user: postgres
+  password: root
+  driver: org.postgresql.Driver
+  pool-size: 20
+# choose json parser. Values: jackson, custom
+json-parser: custom
+pagination:
+  defaultSize: 10
+# properties to choose type of cache (LRU, LFU, NONE) and time lifetime of objects in cache (seconds)
+cache:
+  type: LRU
+  size: 10
+  expirationTime: 600
+# properties to choose test data for time lifetime of objects in cache (seconds). Factory will contain both caches
+test-cache:
+  size: 10
+  expirationTime: 2
