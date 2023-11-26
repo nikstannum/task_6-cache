@@ -30,6 +30,10 @@ import ru.clevertec.service.CustomerService;
 import ru.clevertec.service.dto.CustomerDto;
 import ru.clevertec.service.impl.CustomerServiceImpl;
 import ru.clevertec.service.mapper.CustomerMapper;
+import ru.clevertec.service.util.converter.Converter;
+import ru.clevertec.service.util.converter.PDFConverter;
+import ru.clevertec.service.util.formatter.Formatter;
+import ru.clevertec.service.util.formatter.impl.PrettyJSONFormatter;
 
 @Log4j2
 public class BeanFactory implements Closeable {
@@ -52,6 +56,7 @@ public class BeanFactory implements Closeable {
     private void init() {
         // data
         ConfigManager configManager = new ConfigManager("/application.yml");
+        beans.put(ConfigManager.class, configManager);
         DataSource dataSource = new DataSource(configManager);
         closeables.add(dataSource);
         @SuppressWarnings("unchecked")
@@ -69,9 +74,25 @@ public class BeanFactory implements Closeable {
             customerRepository = new ProxyCustomerRepository(customerRepository, cache);
             closeables.add(cache);
         }
+
+        // JSON
+        String parserType = (String) configManager.getProperty("json-parser");
+        JsonParser parser;
+        if (parserType.equalsIgnoreCase("jackson")) {
+            parser = new JacksonAdapter();
+        } else {
+            parser = new CustomParserAdapter();
+        }
         // service
         CustomerMapper customerMapper = CustomerMapper.INSTANCE;
-        CustomerService customerService = new CustomerServiceImpl(customerRepository, customerMapper);
+        @SuppressWarnings("unchecked")
+        Map<String, Object> pdfProps = (Map<String, Object>) configManager.getProperty("pdf");
+        String templatePath = (String) pdfProps.get("templatePath");
+        String fontPath = (String) pdfProps.get("fontPath");
+        int fontSize = (int) pdfProps.get("fontSize");
+        Converter converter = new PDFConverter(fontSize, templatePath, fontPath);
+        Formatter formatter = new PrettyJSONFormatter();
+        CustomerService customerService = new CustomerServiceImpl(customerRepository, customerMapper, converter, formatter, parser);
 
         // controller
         @SuppressWarnings("unchecked")
@@ -80,13 +101,7 @@ public class BeanFactory implements Closeable {
         PagingUtil pagingUtil = new PagingUtil(defaultPageSize);
         Validator<CustomerDto> customerDtoValidator = new CustomerValidator();
         CustomerController customerController = new CustomerController(customerService, pagingUtil, customerDtoValidator);
-        String parserType = (String) configManager.getProperty("json-parser");
-        JsonParser parser;
-        if (parserType.equalsIgnoreCase("jackson")) {
-            parser = new JacksonAdapter();
-        } else {
-            parser = new CustomParserAdapter();
-        }
+
         // ExcHandler
         ExceptionHandler handler = new ExceptionHandler();
         beans.put(ExceptionHandler.class, handler);

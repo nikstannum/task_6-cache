@@ -48,6 +48,8 @@ dependencies {
     implementation 'org.yaml:snakeyaml:2.1'
 
     implementation 'ru.clevertec:my-parser:1.0-SNAPSHOT'
+
+    implementation 'org.apache.pdfbox:pdfbox:3.0.0'
 }
 
 test {
