@@ -1,0 +1,21 @@
+db:
+  url: jdbc:postgresql://127.0.0.1:5432/customers
+  user: postgres
+  password: root
+  driver: org.postgresql.Driver
+  pool-size: 20
+# choose json parser. Values: jackson, custom
+json-parser: custom
+pagination:
+  defaultSize: 10
+# properties to choose type of cache (LRU, LFU, NONE) and time lifetime of objects in cache (seconds)
+cache:
+  type: LRU
+  size: 10
+  expirationTime: 600
+# properties that determine the location of the template file, font type, font size, location of the finished file
+pdf:
+  templatePath: src/main/resources/pdf/template/Clevertec_Template.pdf
+  destinationDir: results
+  fontPath: src/main/resources/pdf/fonts/TimesNewRomanRegular.ttf
+  fontSize: 15
