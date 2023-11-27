@@ -27,7 +27,7 @@ public class TestBeanFactory implements Closeable {
 
     private void init() {
         // data
-        ConfigManager configManager = new ConfigManager("/application.yml");
+        ConfigManager configManager = new ConfigManager("/application-test.yml");
         beans.put(ConfigManager.class, configManager);
         @SuppressWarnings("unchecked")
         Map<String, Object> cacheProps = (Map<String, Object>) configManager.getProperty("test-cache");

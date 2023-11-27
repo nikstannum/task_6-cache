@@ -1,0 +1,12 @@
+# properties to choose test data for time lifetime of objects in cache (seconds). Factory will contain both caches
+test-cache:
+  size: 10
+  expirationTime: 2
+
+# test properties that determine the location of the template file, font type, font size, location of the finished file
+pdf:
+  templatePath: src/test/resources/testdata/pdf/template/Clevertec_Template.pdf
+  fontPath: src/test/resources/testdata/pdf/fonts/TimesNewRomanRegular.ttf
+  fontSize: 15
+  data: src/test/resources/testdata/pdf/data/test-size-15.pdf
+  content: src/test/resources/testdata/pdf/data/content.txt
