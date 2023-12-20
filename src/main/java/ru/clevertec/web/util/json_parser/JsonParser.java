@@ -1,4 +1,4 @@
-package ru.clevertec.controller.util.json_parser;
+package ru.clevertec.web.util.json_parser;
 
 /**
  * Common interface for JSON parsing

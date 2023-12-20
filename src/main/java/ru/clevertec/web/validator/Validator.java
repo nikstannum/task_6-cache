@@ -1,4 +1,4 @@
-package ru.clevertec.controller.validator;
+package ru.clevertec.web.validator;
 
 import java.util.List;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package ru.clevertec.controller.validator.impl;
+package ru.clevertec.web.validator.impl;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -6,11 +6,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import ru.clevertec.controller.validator.Validator;
 import ru.clevertec.service.dto.CustomerDto;
+import ru.clevertec.web.validator.Validator;
 
 /**
- * Implementation of the {@link ru.clevertec.controller.validator.Validator} for {@link ru.clevertec.service.dto.CustomerDto}
+ * Implementation of the {@link ru.clevertec.web.validator.Validator} for {@link ru.clevertec.service.dto.CustomerDto}
  */
 public class CustomerValidator implements Validator<CustomerDto> {
 

@@ -1,4 +1,4 @@
-CREATE DATABASE customers;
+--CREATE DATABASE customers;
 --DROP DATABASE customers;
 
 

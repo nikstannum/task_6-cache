@@ -41,6 +41,7 @@ public class LFUCacheImpl implements Cache {
 
     /**
      * Checks the presence of an object in the cache by key
+     *
      * @param key
      * @param cacheName
      * @return true if existing

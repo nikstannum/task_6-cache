@@ -1,6 +1,7 @@
 package ru.clevertec.service.mapper;
 
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 import ru.clevertec.data.entity.Customer;
 import ru.clevertec.service.dto.CustomerDto;
@@ -11,5 +12,6 @@ public interface CustomerMapper {
 
     CustomerDto convert(Customer customer);
 
+    @Mapping(target = "deleted", ignore = true)
     Customer convert(CustomerDto customerDto);
 }
