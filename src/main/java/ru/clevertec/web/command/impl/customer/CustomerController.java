@@ -29,6 +29,7 @@ public class CustomerController implements Command {
     private static final int CODE_OK = 200;
     private static final int CODE_CREATED = 201;
     private static final int CODE_NO_CONTENT = 204;
+    public static final String HEADER_LOCATION = "Location";
 
     private final CustomerService customerService;
     private final PagingUtil pagingUtil;
@@ -71,6 +72,8 @@ public class CustomerController implements Command {
                 byte[] bytes = req.getInputStream().readAllBytes();
                 CustomerDto result = create(jsonParser.read(Arrays.toString(bytes), CustomerDto.class));
                 res.setStatus(CODE_CREATED);
+                String location = req.getRequestURL().append("/").append(result.getId()).toString();
+                res.setHeader(HEADER_LOCATION, location);
                 return jsonParser.write(result);
             }
             case PUT -> {
