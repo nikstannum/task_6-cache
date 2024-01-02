@@ -9,9 +9,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import javax.sql.DataSource;
 import lombok.RequiredArgsConstructor;
 import ru.clevertec.data.CustomerRepository;
-import ru.clevertec.data.connection.DataSource;
 import ru.clevertec.data.entity.Customer;
 
 @RequiredArgsConstructor
@@ -53,7 +53,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
 
     @Override
     public Customer create(Customer customer) {
-        try (Connection connection = dataSource.getFreeConnections();
+        try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(CREATE, Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, customer.getFirstName());
             statement.setString(2, customer.getLastName());
@@ -73,7 +73,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     @Override
     public List<Customer> findAll(int limit, long offset) {
         List<Customer> list = new ArrayList<>();
-        try (Connection connection = dataSource.getFreeConnections();
+        try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(FIND_ALL)) {
             statement.setInt(1, limit);
             statement.setLong(2, offset);
@@ -89,7 +89,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
 
     @Override
     public Optional<Customer> findById(Long id) {
-        try (Connection connection = dataSource.getFreeConnections();
+        try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(FIND_BY_ID)) {
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
@@ -104,7 +104,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
 
     @Override
     public Customer update(Customer customer) {
-        try (Connection connection = dataSource.getFreeConnections();
+        try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(UPDATE)) {
             statement.setString(1, customer.getFirstName());
             statement.setString(2, customer.getLastName());
@@ -120,7 +120,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
 
     @Override
     public void deleteById(Long id) {
-        try (Connection connection = dataSource.getFreeConnections();
+        try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(DELETE_BY_ID)) {
             statement.setLong(1, id);
             statement.executeUpdate();

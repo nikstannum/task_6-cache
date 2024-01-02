@@ -1,37 +1,31 @@
 package ru.clevertec.web.util.paging;
 
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 /**
  * Util class for converting the page and page size into a dataset for the SQL query
  */
 @RequiredArgsConstructor
+@Component
 public class PagingUtil {
 
-    private static final String PAGE = "page";
-    private static final String SIZE = "size";
-    private final int defaultSize;
+    @Value("${pagination.defaultSize}")
+    private String defaultSize;
 
-    public Paging getPaging(HttpServletRequest req) {
-        String sizeStr = req.getParameter(SIZE);
+    public Paging getPaging(Integer page, Integer size) {
         int limit;
-        if (sizeStr == null) {
-            limit = defaultSize;
+        int defSize = Integer.parseInt(defaultSize);
+        if (size == null || size > defSize) {
+            limit = defSize;
         } else {
-            limit = Integer.parseInt(sizeStr);
+            limit = size;
         }
-        if (limit > defaultSize) {
-            limit = defaultSize;
-        }
-        String pageStr = req.getParameter(PAGE);
-        long page;
-        if (pageStr == null) {
+        if (page == null || page < 1) {
             page = 1;
-        } else {
-            page = Long.parseLong(pageStr);
         }
-        long offset = (page - 1) * limit;
+        long offset = (long) (page - 1) * limit;
         return new Paging(limit, offset);
     }
 

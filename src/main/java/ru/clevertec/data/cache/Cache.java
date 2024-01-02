@@ -1,12 +1,10 @@
 package ru.clevertec.data.cache;
 
-import java.io.Closeable;
-
 /**
  * Application cache interface. Implementation classes: {@link ru.clevertec.data.cache.impl.LRUCacheImpl},
  * {@link ru.clevertec.data.cache.impl.LFUCacheImpl}
  */
-public interface Cache extends Closeable {
+public interface Cache {
 
     /**
      * Method for placing an object in the cache.
@@ -35,4 +33,6 @@ public interface Cache extends Closeable {
     Object take(String key, String cacheName);
 
     boolean isContains(String key, String cacheName);
+
+    void close();
 }

@@ -5,23 +5,27 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.file.Path;
 import java.util.Objects;
-import lombok.RequiredArgsConstructor;
 import org.apache.pdfbox.Loader;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.PDPageContentStream.AppendMode;
 import org.apache.pdfbox.pdmodel.font.PDType0Font;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 /**
  * PDF converter. Implements {@link ru.clevertec.service.util.converter.Converter}
  */
-@RequiredArgsConstructor
+@Service
 public class PDFConverter implements Converter {
 
-    private final int fontSize;
-    private final String templatePath;
-    private final String fontPath;
+    @Value("${pdf.templatePath}")
+    private String templatePath;
+    @Value("${pdf.fontSize}")
+    private Integer fontSize;
+    @Value("${pdf.fontPath}")
+    private String fontPath;
 
     /**
      * Converts content into a PDF document and redirects the data to the specified output stream.

@@ -6,12 +6,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import org.springframework.stereotype.Component;
 import ru.clevertec.service.dto.CustomerDto;
 import ru.clevertec.web.validator.Validator;
 
 /**
  * Implementation of the {@link ru.clevertec.web.validator.Validator} for {@link ru.clevertec.service.dto.CustomerDto}
  */
+@Component
 public class CustomerValidator implements Validator<CustomerDto> {
 
     private static final String FIRST_NAME = "first name";
