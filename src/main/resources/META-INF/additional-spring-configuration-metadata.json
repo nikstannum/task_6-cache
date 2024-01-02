@@ -1,0 +1,99 @@
+{
+  "properties": [
+    {
+      "name": "json-parser",
+      "type": "java.lang.String",
+      "description": "type of JSON parser"
+    },
+    {
+      "name": "db.url",
+      "type": "java.lang.String",
+      "description": "Database URL."
+    },
+    {
+      "name": "db.user",
+      "type": "java.lang.String",
+      "description": "Database user."
+    },
+    {
+      "name": "db.password",
+      "type": "java.lang.String",
+      "description": "Database password."
+    },
+    {
+      "name": "db.driver",
+      "type": "java.lang.String",
+      "description": "Database driver class name."
+    },
+    {
+      "name": "pagination.defaultSize",
+      "type": "java.lang.Integer",
+      "description": "Default size of objects' list."
+    },
+    {
+      "name": "db.user",
+      "type": "java.lang.String",
+      "description": "Database user."
+    },
+    {
+      "name": "cache.type",
+      "type": "java.lang.String",
+      "description": "Application cache type. Values: LRU, LFU, NONE"
+    },
+    {
+      "name": "cache.size",
+      "type": "java.lang.Integer",
+      "description": "Application cache size"
+    },
+    {
+      "name": "cache.expirationTime",
+      "type": "java.lang.Integer",
+      "description": "Application cache time to live (seconds)"
+    },
+    {
+      "name": "pdf.templatePath",
+      "type": "java.lang.String",
+      "description": "Path to pdf template"
+    },
+    {
+      "name": "pdf.destinationDir",
+      "type": "java.lang.String",
+      "description": "Path to result of printing"
+    },
+    {
+      "name": "pdf.fontPath",
+      "type": "java.lang.String",
+      "description": "Path to font"
+    },
+    {
+      "name": "pdf.fontSize",
+      "type": "java.lang.Integer",
+      "description": "Size of font"
+    },
+    {
+      "name": "liquibase.init-db",
+      "type": "java.lang.Boolean",
+      "description": "Is it necessary to initialize the database using liquibase"
+    },
+    {
+      "name": "liquibase.changeLogFile",
+      "type": "java.lang.String",
+      "description": "Path to changelog file"
+    }
+  ],
+  "hints": [
+    {
+      "name": "json-parser",
+      "values": [
+        {
+          "value": "jackson",
+          "description": "Uses jackson library"
+        },
+        {
+          "value": "custom",
+          "description": "Uses custom library. You need to download this library from https://github.com/nikstannum/clevertec-task5-json-parser and publish in the local repository"
+        }
+      ]
+    }
+  ]
+}
